@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gallery | NS Furnishing</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.gallery-page{
+
+padding:130px 0 80px;
+
+}
+
+.filter-buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:15px;
+
+margin-bottom:40px;
+
+flex-wrap:wrap;
+
+}
+
+.filter-buttons button{
+
+padding:12px 25px;
+
+border:none;
+
+border-radius:40px;
+
+background:#0B2D5C;
+
+color:#fff;
+
+cursor:pointer;
+
+font-weight:600;
+
+transition:.3s;
+
+}
+
+.filter-buttons button:hover{
+
+background:#22C55E;
+
+}
+
+.gallery-container{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:20px;
+
+}
+
+.gallery-item{
+
+overflow:hidden;
+
+border-radius:18px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+background:#fff;
+
+}
+
+.gallery-item img{
+
+width:100%;
+
+height:250px;
+
+object-fit:cover;
+
+transition:.4s;
+
+cursor:pointer;
+
+}
+
+.gallery-item:hover img{
+
+transform:scale(1.08);
+
+}
+
+.gallery-item video{
+
+width:100%;
+
+height:250px;
+
+object-fit:cover;
+
+}
+
+.lightbox{
+
+display:none;
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+background:rgba(0,0,0,.9);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+}
+
+.lightbox img{
+
+max-width:90%;
+
+max-height:90%;
+
+border-radius:15px;
+
+}
+
+.close{
+
+position:absolute;
+
+top:30px;
+
+right:40px;
+
+font-size:35px;
+
+color:#fff;
+
+cursor:pointer;
+
+}
+
+.home-btn{
+
+text-align:center;
+
+margin-top:50px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="container navbar">
+
+<a href="index.html" class="logo">
+
+<img src="assets/logo.svg">
+
+<div>
+
+<h2>NS Furnishing</h2>
+
+<span>Premium Sofa Solutions</span>
+
+</div>
+
+</a>
+
+<nav>
+
+<ul>
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="gallery.html" class="active">Gallery</a></li>
+
+</ul>
+
+</nav>
+
+</div>
+
+</header>
+
+<section class="gallery-page">
+
+<div class="container">
+
+<div class="section-title">
+
+<span class="section-subtitle">
+
+OUR GALLERY
+
+</span>
+
+<h2>
+
+Photos & Videos
+
+</h2>
+
+<p>
+
+Explore our latest sofa manufacturing,
+repair and commercial furnishing projects.
+
+</p>
+
+</div>
+
+<div class="filter-buttons">
+
+<button onclick="filterGallery('all')">
+
+All
+
+</button>
+
+<button onclick="filterGallery('photo')">
+
+Photos
+
+</button>
+
+<button onclick="filterGallery('video')">
+
+Videos
+
+</button>
+
+</div>
+
+<div class="gallery-container">
+
+<div class="gallery-item photo">
+
+<img src="assets/images/gallery/1.jpg"
+onclick="openImage(this.src)">
+
+</div>
+
+<div class="gallery-item photo">
+
+<img src="assets/images/gallery/2.jpg"
+onclick="openImage(this.src)">
+
+</div>
+
+<div class="gallery-item photo">
+
+<img src="assets/images/gallery/3.jpg"
+onclick="openImage(this.src)">
+
+</div>
+
+<div class="gallery-item photo">
+
+<img src="assets/images/gallery/4.jpg"
+onclick="openImage(this.src)">
+
+</div>
+
+<div class="gallery-item photo">
+
+<img src="assets/images/gallery/5.jpg"
+onclick="openImage(this.src)">
+
+</div>
+
+<div class="gallery-item photo">
+
+<img src="assets/images/gallery/6.jpg"
+onclick="openImage(this.src)">
+
+</div>
+
+<div class="gallery-item video">
+
+<video controls>
+
+<source src="assets/videos/video1.mp4" type="video/mp4">
+
+</video>
+
+</div>
+
+<div class="gallery-item video">
+
+<video controls>
+
+<source src="assets/videos/video2.mp4" type="video/mp4">
+
+</video>
+
+</div>
+
+</div>
+
+<div class="home-btn">
+
+<a href="index.html" class="btn btn-primary">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Back To Home
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<div class="lightbox" id="lightbox">
+
+<span class="close"
+onclick="closeImage()">
+
+&times;
+
+</span>
+
+<img id="lightbox-img">
+
+</div>
+
+<div class="floating-buttons">
+
+<a href="index.html"
+class="float-btn gallery-btn">
+
+<i class="fa-solid fa-house"></i>
+
+</a>
+
+<a href="tel:+919876543210"
+class="float-btn call-btn-float">
+
+<i class="fa-solid fa-phone"></i>
+
+</a>
+
+<a href="https://wa.me/919876543210"
+target="_blank"
+class="float-btn whatsapp-btn">
+
+<i class="fa-brands fa-whatsapp"></i>
+
+</a>
+
+</div>
+
+<script>
+
+function filterGallery(type){
+
+const items=document.querySelectorAll('.gallery-item');
+
+items.forEach(item=>{
+
+if(type==="all"){
+
+item.style.display="block";
+
+}
+
+else{
+
+item.style.display=item.classList.contains(type)?"block":"none";
+
+}
+
+});
+
+}
+
+function openImage(src){
+
+document.getElementById("lightbox").style.display="flex";
+
+document.getElementById("lightbox-img").src=src;
+
+}
+
+function closeImage(){
+
+document.getElementById("lightbox").style.display="none";
+
+}
+
+</script>
+
+</body>
+
+</html>
