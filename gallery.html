@@ -22,9 +22,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <style>
 
+/* CHANGE: fluid top padding so the gallery header clears the fixed
+   nav on every screen size instead of a single fixed 130px value
+   that left too much/too little space at different widths. */
 .gallery-page{
 
-padding:130px 0 80px;
+padding:clamp(110px,16vw,130px) 0 80px;
 
 }
 
@@ -36,7 +39,7 @@ justify-content:center;
 
 gap:15px;
 
-margin-bottom:40px;
+margin-bottom:44px;
 
 flex-wrap:wrap;
 
@@ -44,27 +47,41 @@ flex-wrap:wrap;
 
 .filter-buttons button{
 
-padding:12px 25px;
+padding:12px 26px;
 
-border:none;
+border:2px solid transparent;
 
 border-radius:40px;
 
-background:#0B2D5C;
-
-color:#fff;
+background:#fff;
+color:var(--primary);
+box-shadow:var(--shadow-sm);
 
 cursor:pointer;
 
 font-weight:600;
 
-transition:.3s;
+transition:transform .3s var(--ease), box-shadow .3s ease, background .3s ease, color .3s ease;
 
 }
 
 .filter-buttons button:hover{
 
-background:#22C55E;
+background:var(--gradient-primary);
+color:#fff;
+transform:translateY(-2px);
+box-shadow:var(--shadow);
+
+}
+
+/* CHANGE: active filter state (added via script.js) is now visible,
+   not just tracked in the DOM — previously there was no way to tell
+   which filter was currently applied. */
+.filter-buttons button.active-filter{
+
+background:var(--gradient-accent);
+color:#fff;
+box-shadow:0 10px 22px rgba(34,197,94,.32);
 
 }
 
@@ -74,7 +91,7 @@ display:grid;
 
 grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 
-gap:20px;
+gap:22px;
 
 }
 
@@ -82,12 +99,19 @@ gap:20px;
 
 overflow:hidden;
 
-border-radius:18px;
+border-radius:var(--radius);
 
-box-shadow:0 10px 30px rgba(0,0,0,.08);
+box-shadow:var(--shadow);
 
-background:#fff;
+background:linear-gradient(135deg,#e2e8f0,#f1f5f9);
 
+transition:transform .4s var(--ease), box-shadow .4s ease;
+
+}
+
+.gallery-item:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-hover);
 }
 
 .gallery-item img{
@@ -98,15 +122,16 @@ height:250px;
 
 object-fit:cover;
 
-transition:.4s;
+transition:transform .5s var(--ease), filter .4s ease;
 
 cursor:pointer;
 
 }
 
-.gallery-item:hover img{
+.gallery-item img:hover{
 
 transform:scale(1.08);
+filter:brightness(1.03);
 
 }
 
@@ -117,6 +142,7 @@ width:100%;
 height:250px;
 
 object-fit:cover;
+display:block;
 
 }
 
@@ -134,7 +160,7 @@ width:100%;
 
 height:100%;
 
-background:rgba(0,0,0,.9);
+background:rgba(4,10,22,.92);
 
 justify-content:center;
 
@@ -142,6 +168,18 @@ align-items:center;
 
 z-index:9999;
 
+/* Fade the backdrop in rather than snapping to full opacity */
+animation:lightboxFade .25s ease;
+
+}
+
+@keyframes lightboxFade{
+    from{ opacity:0; }
+    to{ opacity:1; }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .lightbox{ animation:none; }
 }
 
 .lightbox img{
@@ -151,6 +189,7 @@ max-width:90%;
 max-height:90%;
 
 border-radius:15px;
+box-shadow:0 30px 70px rgba(0,0,0,.5);
 
 }
 
@@ -158,23 +197,37 @@ border-radius:15px;
 
 position:absolute;
 
-top:30px;
+top:26px;
 
-right:40px;
+right:30px;
 
-font-size:35px;
+font-size:34px;
 
 color:#fff;
 
 cursor:pointer;
 
+width:48px;
+height:48px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(255,255,255,.12);
+transition:background .3s ease, transform .3s ease;
+
+}
+
+.close:hover{
+    background:rgba(255,255,255,.22);
+    transform:rotate(90deg);
 }
 
 .home-btn{
 
 text-align:center;
 
-margin-top:50px;
+margin-top:56px;
 
 }
 
@@ -184,13 +237,15 @@ margin-top:50px;
 
 <body>
 
+<a href="#gallery-top" class="skip-link">Skip to content</a>
+
 <header class="header">
 
 <div class="container navbar">
 
 <a href="index.html" class="logo">
 
-<img src="assets/logo.svg">
+<img src="assets/ns_furnishing_logo.png" alt="NS Furnishing">
 
 <div>
 
@@ -202,7 +257,13 @@ margin-top:50px;
 
 </a>
 
-<nav>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+
+<nav id="primaryNav">
 
 <ul>
 
@@ -214,11 +275,13 @@ margin-top:50px;
 
 </nav>
 
+<div class="nav-backdrop" id="navBackdrop"></div>
+
 </div>
 
 </header>
 
-<section class="gallery-page">
+<section class="gallery-page" id="gallery-top">
 
 <div class="container">
 
@@ -247,19 +310,19 @@ repair and commercial furnishing projects.
 
 <div class="filter-buttons">
 
-<button onclick="filterGallery('all')">
+<button onclick="filterGallery('all')" class="active-filter" aria-pressed="true">
 
 All
 
 </button>
 
-<button onclick="filterGallery('photo')">
+<button onclick="filterGallery('photo')" aria-pressed="false">
 
 Photos
 
 </button>
 
-<button onclick="filterGallery('video')">
+<button onclick="filterGallery('video')" aria-pressed="false">
 
 Videos
 
@@ -272,42 +335,66 @@ Videos
 <div class="gallery-item photo">
 
 <img src="assets/images/gallery/1.jpg"
-onclick="openImage(this.src)">
+alt="Sofa manufacturing project photo 1"
+onclick="openImage(this.src)"
+tabindex="0"
+role="button"
+onkeydown="if(event.key==='Enter'||event.key===' '){openImage(this.src);}">
 
 </div>
 
 <div class="gallery-item photo">
 
 <img src="assets/images/gallery/2.jpg"
-onclick="openImage(this.src)">
+alt="Sofa manufacturing project photo 2"
+onclick="openImage(this.src)"
+tabindex="0"
+role="button"
+onkeydown="if(event.key==='Enter'||event.key===' '){openImage(this.src);}">
 
 </div>
 
 <div class="gallery-item photo">
 
 <img src="assets/images/gallery/3.jpg"
-onclick="openImage(this.src)">
+alt="Sofa manufacturing project photo 3"
+onclick="openImage(this.src)"
+tabindex="0"
+role="button"
+onkeydown="if(event.key==='Enter'||event.key===' '){openImage(this.src);}">
 
 </div>
 
 <div class="gallery-item photo">
 
 <img src="assets/images/gallery/4.jpg"
-onclick="openImage(this.src)">
+alt="Commercial furniture project photo 4"
+onclick="openImage(this.src)"
+tabindex="0"
+role="button"
+onkeydown="if(event.key==='Enter'||event.key===' '){openImage(this.src);}">
 
 </div>
 
 <div class="gallery-item photo">
 
 <img src="assets/images/gallery/5.jpg"
-onclick="openImage(this.src)">
+alt="Restaurant furniture project photo 5"
+onclick="openImage(this.src)"
+tabindex="0"
+role="button"
+onkeydown="if(event.key==='Enter'||event.key===' '){openImage(this.src);}">
 
 </div>
 
 <div class="gallery-item photo">
 
 <img src="assets/images/gallery/6.jpg"
-onclick="openImage(this.src)">
+alt="Hotel furniture project photo 6"
+onclick="openImage(this.src)"
+tabindex="0"
+role="button"
+onkeydown="if(event.key==='Enter'||event.key===' '){openImage(this.src);}">
 
 </div>
 
@@ -352,7 +439,11 @@ Back To Home
 <div class="lightbox" id="lightbox">
 
 <span class="close"
-onclick="closeImage()">
+onclick="closeImage()"
+role="button"
+tabindex="0"
+aria-label="Close image"
+onkeydown="if(event.key==='Enter'){closeImage();}">
 
 &times;
 
@@ -365,28 +456,36 @@ onclick="closeImage()">
 <div class="floating-buttons">
 
 <a href="index.html"
-class="float-btn gallery-btn">
+class="float-btn gallery-btn"
+title="Home"
+aria-label="Home">
 
 <i class="fa-solid fa-house"></i>
 
 </a>
 
-<a href="tel:+919876543210"
-class="float-btn call-btn-float">
+<a href="tel:+918169219920"
+class="float-btn call-btn-float"
+title="Call"
+aria-label="Call">
 
 <i class="fa-solid fa-phone"></i>
 
 </a>
 
-<a href="https://wa.me/919876543210"
+<a href="https://wa.me/918169219920"
 target="_blank"
-class="float-btn whatsapp-btn">
+class="float-btn whatsapp-btn"
+title="WhatsApp"
+aria-label="WhatsApp">
 
 <i class="fa-brands fa-whatsapp"></i>
 
 </a>
 
 </div>
+
+<script src="js/script.js"></script>
 
 <script>
 
@@ -410,6 +509,14 @@ item.style.display=item.classList.contains(type)?"block":"none";
 
 });
 
+/* UI fix: visually + semantically mark which filter is active (was previously untracked) */
+document.querySelectorAll('.filter-buttons button').forEach(btn=>{
+    btn.classList.remove('active-filter');
+    btn.setAttribute('aria-pressed','false');
+});
+event.target.classList.add('active-filter');
+event.target.setAttribute('aria-pressed','true');
+
 }
 
 function openImage(src){
@@ -418,13 +525,32 @@ document.getElementById("lightbox").style.display="flex";
 
 document.getElementById("lightbox-img").src=src;
 
+/* UI fix: prevent background from scrolling behind the open lightbox */
+document.body.style.overflow="hidden";
+
 }
 
 function closeImage(){
 
 document.getElementById("lightbox").style.display="none";
 
+document.body.style.overflow="";
+
 }
+
+/* UI fix: allow closing the lightbox with the Escape key */
+document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){
+        closeImage();
+    }
+});
+
+/* UI fix: clicking the dark backdrop (outside the image) also closes the lightbox */
+document.getElementById("lightbox").addEventListener("click", function(e){
+    if(e.target === this){
+        closeImage();
+    }
+});
 
 </script>
 
