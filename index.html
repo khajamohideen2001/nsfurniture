@@ -28,6 +28,9 @@
 
 <body>
 
+    <!-- Skip link: accessibility addition only, does not change visible content -->
+    <a href="#home" class="skip-link">Skip to content</a>
+
     <!-- ================= HEADER ================= -->
 
     <header class="header">
@@ -48,7 +51,14 @@
 
             </a>
 
-            <nav>
+            <!-- Mobile menu toggle: fixes missing mobile navigation (nav was simply hidden with no way to open it) -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav id="primaryNav">
 
                 <ul>
 
@@ -66,7 +76,10 @@
 
             </nav>
 
-            <a href="tel:+919876543210" class="call-btn">
+            <!-- Backdrop used to close the mobile menu when tapping outside it -->
+            <div class="nav-backdrop" id="navBackdrop"></div>
+
+            <a href="tel:+918169219920" class="call-btn">
 
                 <i class="fa-solid fa-phone"></i>
 
@@ -118,7 +131,7 @@
 
                     </a>
 
-                    <a href="https://wa.me/919876543210"
+                    <a href="https://wa.me/918169219920"
 
                         target="_blank"
 
@@ -264,7 +277,7 @@
 
                 <p>
                     From premium sofa manufacturing to complete commercial
-                    furnishing, we provide end-to-end furniture solutions.
+                    furnishing, we provide end-to-end sofa and seating solutions.
                 </p>
 
             </div>
@@ -418,6 +431,42 @@
         </div>
 
     </section>
+	
+	
+	<!---Customer Review-->
+	
+	 <section class="testimonials section">
+
+        <div class="container">
+
+            <div class="section-title">
+
+                <span class="section-subtitle">CUSTOMER REVIEWS</span>
+
+                <h2>What Our Customers Say</h2>
+
+            </div>
+
+
+<div class="review-card">
+
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-934e1bb6-dcce-45c7-81b9-a91f16c8ce8c" data-elfsight-app-lazy></div>
+
+    <div class="review-actions">
+        
+        <a href="https://search.google.com/local/writereview?placeid=ChIJUSGYm5hmUjoRRr3HefxMxZE" target="_blank" class="btn btn-primary">⭐ Rate Us</a>
+    </div>
+
+</div>
+
+
+
+
+        </div>
+
+    </section>
+
 
     <!-- ================= LATEST WORK ================= -->
 
@@ -465,81 +514,9 @@
 
     </section>
 
-    <!-- ======== PART 3 CONTINUES FROM HERE ======== -->
-	
-	    <!-- ================= TESTIMONIALS ================= -->
+    
 
-    <section class="testimonials section">
-
-        <div class="container">
-
-            <div class="section-title">
-
-                <span class="section-subtitle">CUSTOMER REVIEWS</span>
-
-                <h2>What Our Customers Say</h2>
-
-            </div>
-
-            <div class="testimonial-grid">
-
-                <div class="testimonial-card">
-
-                    <div class="stars">
-                        ⭐⭐⭐⭐⭐
-                    </div>
-
-                    <p>
-
-                        Excellent workmanship and premium finishing.
-                        Highly satisfied with the sofa quality.
-
-                    </p>
-
-                    <h4>— Ramesh Kumar</h4>
-
-                </div>
-
-                <div class="testimonial-card">
-
-                    <div class="stars">
-                        ⭐⭐⭐⭐⭐
-                    </div>
-
-                    <p>
-
-                        Very professional service and on-time delivery.
-                        Strongly recommended.
-
-                    </p>
-
-                    <h4>— Priya S</h4>
-
-                </div>
-
-                <div class="testimonial-card">
-
-                    <div class="stars">
-                        ⭐⭐⭐⭐⭐
-                    </div>
-
-                    <p>
-
-                        My old sofa looks brand new after
-                        reupholstery. Amazing work!
-
-                    </p>
-
-                    <h4>— Aravind R</h4>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
+   
     <!-- ================= CONTACT ================= -->
 
     <section class="contact section" id="contact">
@@ -566,23 +543,24 @@
 
                 <!-- Contact Details -->
 
-                <div class="contact-info">
+              <a href="tel:+918169219920"  <div class="contact-info">
 
                     <div class="info-box">
 
                         <i class="fa-solid fa-phone"></i>
-
+    
                         <div>
 
-                            <h3>Call Us</h3>
+                             <h3>Call Us</h3> 
 
-                            <p>+91 98765 43210</p>
+                            <p>+91 81692 19920</p>
 
                         </div>
 
-                    </div>
+                    </div> </a>
 
-                    <div class="info-box">
+                   <a href="https://wa.me/918169219920"   <div class="contact-info">
+				   <div class="info-box">
 
                         <i class="fa-brands fa-whatsapp"></i>
 
@@ -594,9 +572,17 @@
 
                         </div>
 
-                    </div>
+                    </div> </a>
 
-                    <div class="info-box">
+                     
+					 
+					 
+
+              
+			
+			 <a href="https://maps.app.goo.gl/1ubE7EmchksEynnh6"   <div class="contact-info">
+					 
+					 <div class="info-box">
 
                         <i class="fa-solid fa-location-dot"></i>
 
@@ -604,15 +590,32 @@
 
                             <h3>Location</h3>
 
-                            <p>Chennai, Tamil Nadu</p>
+                            <p>Arumbakkam, Chennai, Tamil Nadu</p>
 
                         </div>
 
-                    </div>
+                    </div>  </a>
+					
+					
+					
+				<a href="https://search.google.com/local/writereview?placeid=ChIJUSGYm5hmUjoRRr3HefxMxZE"   <div class="contact-info">
+				   <div class="info-box">
 
-                    <div class="contact-buttons">
+                        <i class="fa-solid fa-star"></i>
 
-                        <a href="tel:+919876543210"
+                        <div>
+
+                            <h3>Rate Us</h3>
+
+                            <p>Write a review</p>
+
+                        </div>
+
+                    </div> </a>
+
+              <!--     <div class="contact-buttons">
+
+                        <a href="tel:+918169219920"
 
                             class="btn btn-primary">
 
@@ -620,7 +623,7 @@
 
                         </a>
 
-                        <a href="https://wa.me/919876543210"
+                        <a href="https://wa.me/918169219920"
 
                             target="_blank"
 
@@ -642,11 +645,11 @@
 
                     </div>
 
-                </div>
+                </div>   -->
 
                 <!-- Contact Form -->
 
-                <div class="contact-form">
+              <!--  <div class="contact-form">
 
                     <form>
 
@@ -654,15 +657,17 @@
                             type="text"
                             id="name"
                             placeholder="Your Name"
+                            aria-label="Your Name"
                             required>
 
                         <input
                             type="tel"
                             id="phone"
                             placeholder="Mobile Number"
+                            aria-label="Mobile Number"
                             required>
 
-                        <select id="service">
+                        <select id="service" aria-label="Choose Service">
 
                             <option>Choose Service</option>
 
@@ -681,7 +686,8 @@
                         <textarea
                             id="message"
                             rows="5"
-                            placeholder="Tell us your requirement"></textarea>
+                            placeholder="Tell us your requirement"
+                            aria-label="Tell us your requirement"></textarea>
 
                         <button
                             type="button"
@@ -696,11 +702,11 @@
 
                 </div>
 
-            </div>
+            </div>  -->
 
             <!-- Google Map -->
 
-            <div class="map">
+           <!-- <div class="map">
 
                 <iframe
                     src="https://www.google.com/maps?q=Chennai&output=embed"
@@ -710,7 +716,7 @@
 
             </div>
 
-        </div>
+        </div> -->
 
     </section>
 
@@ -728,6 +734,13 @@
 
                     Premium Sofa Sales &
                     Professional Furniture Services.
+
+                </p>
+				<h3>Address</h3>
+
+                <p>
+
+                    No.43/B, Panchali Amman Koil Street, Sanjeevi St, Arumbakkam, Chennai, Tamil Nadu 600106.
 
                 </p>
 
@@ -756,6 +769,34 @@
                 <p>9:00 AM - 8:00 PM</p>
 
             </div>
+			<div class="footer-contact">
+
+    <h3>Get In Touch</h3>
+
+    <div class="contact-social">
+
+        <a href="https://wa.me/918169219920" target="_blank" class="social-btn whatsapp">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span>WhatsApp</span>
+        </a>
+
+        <a href="https://www.instagram.com/ns.furnishing?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+           target="_blank"
+           class="social-btn instagram">
+            <i class="fa-brands fa-instagram"></i>
+            <span>Instagram</span>
+        </a>
+		 <a href="mailto:nsfurnishingofficial@gmail.com"
+           target="_blank"
+           class="social-btn email">
+            <i class="fa-solid fa-envelope"></i>
+            <span>Email Us</span>
+        </a>
+
+    </div>
+
+</div>
+			
 
         </div>
 
@@ -773,24 +814,27 @@
 
         <a href="gallery.html"
             class="float-btn gallery-btn"
-            title="Gallery">
+            title="Gallery"
+            aria-label="Gallery">
 
             <i class="fa-solid fa-images"></i>
 
         </a>
 
-        <a href="tel:+919876543210"
+        <a href="tel:+918169219920"
             class="float-btn call-btn-float"
-            title="Call">
+            title="Call"
+            aria-label="Call">
 
             <i class="fa-solid fa-phone"></i>
 
         </a>
 
-        <a href="https://wa.me/919876543210"
+        <a href="https://wa.me/918169219920"
             target="_blank"
             class="float-btn whatsapp-btn"
-            title="WhatsApp">
+            title="WhatsApp"
+            aria-label="WhatsApp">
 
             <i class="fa-brands fa-whatsapp"></i>
 
@@ -799,7 +843,8 @@
         <button
             id="topBtn"
             class="float-btn top-btn"
-            title="Back to Top">
+            title="Back to Top"
+            aria-label="Back to Top">
 
             <i class="fa-solid fa-arrow-up"></i>
 
@@ -810,7 +855,7 @@
     <!-- ================= JAVASCRIPT ================= -->
 
     <script src="js/script.js"></script>
-
+  <!-- <script src="https://elfsightcdn.com/platform.js" async></script> -->
 </body>
 
 </html>
