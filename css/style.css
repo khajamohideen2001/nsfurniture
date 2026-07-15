@@ -129,6 +129,7 @@ richer depth without inventing new brand hues.
 --gray-light:#94a3b8;
 --light:#f7f8fc;
 
+
 /* Gradients used across hero, buttons, cards and footer for visual hierarchy */
 --gradient-primary:linear-gradient(135deg,var(--primary) 0%,var(--primary-light) 100%);
 --gradient-accent:linear-gradient(135deg,var(--secondary) 0%,var(--secondary-dark) 100%);
@@ -144,6 +145,7 @@ richer depth without inventing new brand hues.
 --radius-lg:26px;
 
 --ease:cubic-bezier(.25,.8,.25,1);
+
 
 }
 
@@ -320,7 +322,7 @@ display:flex;
 
 align-items:center;
 
-gap:15px;
+gap:16px;
 
 color:#222;
 
@@ -328,9 +330,10 @@ color:#222;
 
 .logo img{
 
-width:65px; /* CHANGE (bug fix): was 115px, oversized enough to fight the
+width:85px; /* CHANGE (bug fix): was 115px, oversized enough to fight the
                logo text for space and overflow the mobile navbar */
 height:auto;
+display:block;
 
 }
 
@@ -508,8 +511,8 @@ background-position:center;
 background-attachment:scroll; /* fixed backgrounds can jank on mobile Safari; scroll keeps it smooth */
 
 
-padding-top:110px;
-padding-bottom:60px;
+padding-top:125px;
+padding-bottom:25px;
 
 }
 
@@ -1071,6 +1074,7 @@ HOVER EFFECTS (shared transition base)
 transition:all .35s var(--ease);
 
 }
+
 
 /*========================
 SCROLL-REVEAL ANIMATION
@@ -1931,5 +1935,71 @@ CROSS-BROWSER / PRINT NICETIES
     margin-top:24px;
 }
 
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+        linear-gradient(90deg,
+        rgba(10,34,70,.92) 0%,
+        rgba(10,34,70,.82) 45%,
+        rgba(10,34,70,.55) 100%);
+}
+/* Hero Animation */
+.hero-logo,
+
+.hero-text,
+.hero-buttons,
+.hero-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+}
 
 
+
+/* Animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Active State */
+.animate {
+    animation: fadeUp 700ms ease forwards;
+}
+
+.gallery-item{
+    text-align:center;
+}
+
+.gallery-item img{
+    width:100%;
+    display:block;
+	object-fit:cover;
+    border-radius:12px;
+}
+
+.gallery-item h4{
+    margin-top:16px;
+    font-size:1rem;
+    font-weight:600;
+    color:#1f2937;
+    letter-spacing:.5px;
+}
+@media (max-width: 992px){
+    .gallery-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media (max-width: 576px){
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+}
