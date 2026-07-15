@@ -237,7 +237,7 @@ prefers reduced motion (reveals content instantly).
 const revealSelectors =
     ".service-card, .why-card, .testimonial-card, .about-image, " +
     ".about-content, .gallery-grid img, .gallery-item, .section-title, " +
-    ".info-box, .contact-form, .hero-text";
+    ".info-box, .contact-form";
 
 if (!prefersReducedMotion) {
 
@@ -348,3 +348,26 @@ console.log(
     "%cNS Furnishing Website Loaded Successfully",
     "color:#22C55E;font-size:16px;font-weight:bold;"
 );
+
+
+window.addEventListener("load", () => {
+
+    const items = [
+        ".hero-logo",
+        ".hero-title",
+        ".hero-text",
+        ".hero-buttons",
+        ".hero-scroll"
+    ];
+
+    items.forEach((selector, index) => {
+        const element = document.querySelector(selector);
+
+        if (element) {
+            setTimeout(() => {
+                element.classList.add("animate");
+            }, index * 200);
+        }
+    });
+
+});
